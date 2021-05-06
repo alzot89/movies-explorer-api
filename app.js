@@ -10,7 +10,7 @@ const { PORT = 3000 } = process.env;
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { usersRouter } = require('./routes/users');
-const { cardsRouter } = require('./routes/cards');
+const { moviesRouter } = require('./routes/movies');
 const auth = require('./middlewares/auth');
 const { login, createUser } = require('./controllers/users');
 const NotFoundError = require('./errors/not-found-err');
@@ -59,7 +59,7 @@ app.post('/signin', celebrate({
 }), login);
 app.use(auth);
 app.use('/users', usersRouter);
-app.use('/cards', cardsRouter);
+app.use('/', moviesRouter);
 app.use('*', (req, res, next) => {
   next(new NotFoundError('запрашиваемый ресурс не найден'));
 });
