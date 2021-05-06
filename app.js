@@ -13,7 +13,7 @@ const { usersRouter } = require('./routes/users');
 const { moviesRouter } = require('./routes/movies');
 const auth = require('./middlewares/auth');
 const { login, createUser } = require('./controllers/users');
-const NotFoundError = require('./errors/not-found-err');
+const NotFoundError = require('./errors/not-found-error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 mongoose.connect('mongodb://localhost:27017/moviesdb', {

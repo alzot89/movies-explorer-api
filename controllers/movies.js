@@ -1,5 +1,5 @@
 const Movie = require('../models/movie');
-const NotFoundError = require('../errors/not-found-err');
+const NotFoundError = require('../errors/not-found-error');
 const ErrorInRequest = require('../errors/error-in-request');
 
 const getMovies = (req, res, next) => {

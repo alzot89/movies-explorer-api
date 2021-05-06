@@ -3,7 +3,7 @@ require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const NotFoundError = require('../errors/not-found-err');
+const NotFoundError = require('../errors/not-found-error');
 const ErrorInRequest = require('../errors/error-in-request');
 const AuthError = require('../errors/auth-error');
 const ConflictError = require('../errors/conflict-error');
