@@ -1,6 +1,6 @@
 const moviesRouter = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
-const { getMovies, createMovie, deleteMovie } = require('../controllers/users');
+const { getMovies, createMovie, deleteMovie } = require('../controllers/movies');
 
 moviesRouter.get('/movies', getMovies);
 moviesRouter.post('/movies', celebrate({
