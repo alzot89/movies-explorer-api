@@ -7,6 +7,7 @@ const { errors } = require('celebrate');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
 const router = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -19,6 +20,10 @@ mongoose.connect('mongodb://localhost:27017/moviesdb', {
 });
 
 const app = express();
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+});
 app.use((req, res, next) => {
   res.append('Access-Control-Allow-Origin', ['*']);
   res.append('Access-Control-Expose-Headers', 'Set-Cookie');
@@ -29,6 +34,7 @@ app.use((req, res, next) => {
 });
 app.use(cors({ origin: true, credentials: true }));
 app.use(helmet());
+app.use(limiter);
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(requestLogger);
