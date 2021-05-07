@@ -1,19 +1,13 @@
 require('dotenv').config();
 
+const { PORT = 3000 } = process.env;
 const express = require('express');
 const mongoose = require('mongoose');
-const { celebrate, Joi } = require('celebrate');
 const { errors } = require('celebrate');
 const cors = require('cors');
-
-const { PORT = 3000 } = process.env;
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const { usersRouter } = require('./routes/users');
-const { moviesRouter } = require('./routes/movies');
-const auth = require('./middlewares/auth');
-const { login, createUser, logout } = require('./controllers/users');
-const NotFoundError = require('./errors/not-found-error');
+const router = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 mongoose.connect('mongodb://localhost:27017/moviesdb', {
@@ -33,40 +27,11 @@ app.use((req, res, next) => {
   next();
 });
 app.use(cors({ origin: true, credentials: true }));
-
 app.use(cookieParser());
 app.use(bodyParser.json());
-
 app.use(requestLogger);
-
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
-});
-app.post('/signup', celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
-  }),
-}), createUser);
-app.post('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
-  }),
-}), login);
-app.use('/logout', logout);
-app.use(auth);
-app.use('/users', usersRouter);
-app.use('/', moviesRouter);
-app.use('*', (req, res, next) => {
-  next(new NotFoundError('запрашиваемый ресурс не найден'));
-});
-
+app.use(router);
 app.use(errorLogger);
-
 app.use(errors());
 app.use((err, req, res, next) => {
   res.status(err.statusCode).send({ message: err.message });
