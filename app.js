@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const router = require('./routes/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -27,6 +28,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use(cors({ origin: true, credentials: true }));
+app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(requestLogger);
