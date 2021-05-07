@@ -12,7 +12,7 @@ const cookieParser = require('cookie-parser');
 const { usersRouter } = require('./routes/users');
 const { moviesRouter } = require('./routes/movies');
 const auth = require('./middlewares/auth');
-const { login, createUser } = require('./controllers/users');
+const { login, createUser, logout } = require('./controllers/users');
 const NotFoundError = require('./errors/not-found-error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
@@ -57,6 +57,7 @@ app.post('/signin', celebrate({
     password: Joi.string().required().min(8),
   }),
 }), login);
+app.use('/logout', logout);
 app.use(auth);
 app.use('/users', usersRouter);
 app.use('/', moviesRouter);

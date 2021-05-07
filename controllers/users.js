@@ -55,6 +55,10 @@ const login = (req, res, next) => {
     });
 };
 
+const logout = (req, res) => {
+  res.clearCookie('jwt').send({ message: 'Вы вышли из аккаунта' });
+};
+
 const getUser = (req, res, next) => {
   User.findById(req.user._id)
     .orFail(new NotFoundError('нет пользователя с таким id'))
@@ -92,4 +96,5 @@ module.exports = {
   createUser,
   updateUser,
   login,
+  logout,
 };
