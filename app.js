@@ -25,7 +25,7 @@ const limiter = rateLimit({
   max: 100,
 });
 app.use((req, res, next) => {
-  res.append('Access-Control-Allow-Origin', ['http://localhost', 'https://alzot.movies.nomoredomains.icu']);
+  res.append('Access-Control-Allow-Origin', ['http://localhost:3000', 'https://alzot.movies.nomoredomains.icu']);
   res.append('Access-Control-Expose-Headers', 'Set-Cookie');
   res.append('Access-Control-Allow-Credentials', 'true');
   res.append('Access-Control-Allow-Methods', 'GET, HEAD, PUT, PATCH, POST, DELETE');
