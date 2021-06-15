@@ -47,6 +47,7 @@ const login = (req, res, next) => {
           httpOnly: true,
           path: '/',
           sameSite: 'none',
+          secure: true,
         })
         .send({ message: 'вы успешно авторизовались' });
     })
