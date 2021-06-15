@@ -46,6 +46,7 @@ const login = (req, res, next) => {
           maxAge: 3600000 * 24 * 7,
           httpOnly: true,
           path: '/',
+          sameSite: 'none',
         })
         .send({ message: 'вы успешно авторизовались' });
     })
